@@ -6,10 +6,10 @@ import useFetchApi from "../../hooks/useFetchApi";
 import SavedUser from "../../types/savedUser";
 import useDeviceWidth from "../../hooks/useDeviceWidth";
 
-const UserIcon = () => {
-  const [authorization] = useLocalStorage("authorization", null);
-  const mobile = useDeviceWidth((width) => width <= 1400);
+const UserIcon = (): JSX.Element => {
+  const [authorization] = useLocalStorage<null | string>("authorization", null);
   const [user, setUser] = useState<SavedUser | null>(null);
+  const mobile = useDeviceWidth((width) => width <= 1400);
   const navigate = useNavigate();
   const fetchApi = useFetchApi();
 
@@ -19,9 +19,9 @@ const UserIcon = () => {
 
       setUser(
         await fetchApi("/account/user", {
-          headers: new Headers({
+          headers: {
             authorization,
-          }),
+          },
         })
       );
     })();
@@ -43,6 +43,7 @@ const UserIcon = () => {
   ) : user ? (
     <img
       src={user.avatar}
+      onClick={() => navigate("/account/profile")}
       style={{
         backgroundColor: "rgb(80,80,80, 0.6)",
         width: "50px",
