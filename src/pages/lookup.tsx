@@ -1,10 +1,10 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import SavedUser from "../types/savedUser";
 import useFetchApi from "../hooks/useFetchApi";
 import InfiniteScroll from "../components/infiniteScroll";
 
-const Lookup = (): JSX.Element => {
+const Lookup = (): React.ReactNode => {
   const [searchParams, setSearchParams] = useSearchParams({
     lookup: "",
   });
@@ -56,7 +56,7 @@ const Lookup = (): JSX.Element => {
               <p>
                 {e.displayName} ({e.username})
               </p>
-              <img src={e.avatar} style={{ height: "550px" }} />
+              <img src={e.avatar} style={{ height: "60px" }} />
             </div>
           ))}
         </InfiniteScroll>

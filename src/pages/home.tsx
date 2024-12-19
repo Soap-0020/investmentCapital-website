@@ -11,11 +11,11 @@ import redirect from "../functions/redirect";
 import useDeviceWidth from "../hooks/useDeviceWidth";
 import useFetchApi from "../hooks/useFetchApi";
 import ShadowButton from "../components/buttons/shadowButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import botInvite from "../config/botInvite";
 import { useLocalStorage } from "@uidotdev/usehooks";
 
-const Home = (): JSX.Element => {
+const Home = (): React.ReactNode => {
   const isMobile = useDeviceWidth((width) => width <= 800);
   const fetchApi = useFetchApi();
   const navigate = useNavigate();

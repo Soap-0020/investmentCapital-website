@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import Investor from "../../types/investor";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useWebsocketApi from "../../hooks/useWebsocketApi";
 import NumberFlow from "@number-flow/react";
+import hasPermissions from "../../functions/hasPermissions";
 
-const AccountProfile = () => {
+const AccountPortfolio = () => {
   const [data, setData] = useState<Investor | null>(null);
   const [authorization] = useLocalStorage("authorization", null);
   const navigate = useNavigate();
@@ -48,9 +49,12 @@ const AccountProfile = () => {
           );
         })}
         <button onClick={() => navigate("/auth/logout")}>Logout</button>
+        {hasPermissions("admin", data.permissions) && (
+          <button onClick={() => navigate("/admin/panel")}>Admin Panel</button>
+        )}
       </div>
     )
   );
 };
 
-export default AccountProfile;
+export default AccountPortfolio;

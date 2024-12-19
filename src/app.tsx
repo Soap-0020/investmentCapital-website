@@ -1,10 +1,11 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 import Navbar from "./components/navbar/navbar";
 import routes from "./config/routes";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import LoginMenu from "./components/loginMenu";
+import PermissionsOnlyPage from "./components/permissionsOnlyPage";
 
-const App = (): JSX.Element => {
+const App = (): React.ReactNode => {
   const [authorization] = useLocalStorage("authorization", null);
 
   return (
@@ -21,10 +22,16 @@ const App = (): JSX.Element => {
               key={index}
               path={path}
               element={
-                route.authorized && !authorization ? (
+                (route.admin || route.owner || route.authorized) &&
+                !authorization ? (
                   <LoginMenu />
+                ) : route.admin || route.owner ? (
+                  <PermissionsOnlyPage
+                    element={route.element}
+                    permission={route.owner ? "owner" : "admin"}
+                  />
                 ) : (
-                  route.element
+                  <route.element />
                 )
               }
             />

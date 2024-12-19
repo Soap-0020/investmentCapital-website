@@ -1,12 +1,12 @@
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Button from "../buttons/button";
 import useFetchApi from "../../hooks/useFetchApi";
 import SavedUser from "../../types/savedUser";
 import useDeviceWidth from "../../hooks/useDeviceWidth";
 
-const UserIcon = (): JSX.Element => {
+const UserIcon = (): React.ReactNode => {
   const [authorization] = useLocalStorage<null | string>("authorization", null);
   const [user, setUser] = useState<SavedUser | null>(null);
   const mobile = useDeviceWidth((width) => width <= 1400);
@@ -35,7 +35,7 @@ const UserIcon = (): JSX.Element => {
   ) : user ? (
     <img
       src={user.avatar}
-      onClick={() => navigate("/account/profile")}
+      onClick={() => navigate("/account/portfolio")}
       style={{
         backgroundColor: "rgb(80,80,80, 0.6)",
         width: "50px",

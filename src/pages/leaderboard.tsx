@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import LeaderboardType from "../types/leaderboard";
 import SavedUser from "../types/savedUser";
 import useFetchApi from "../hooks/useFetchApi";
 import InfiniteScroll from "../components/infiniteScroll";
 import leaderboards from "../config/leaderboards";
 
-const Leaderboard = (): JSX.Element => {
+const Leaderboard = (): React.ReactNode => {
   const location = useLocation();
   const type = location.pathname.split("/")[2];
   const leaderboard = location.pathname.split("/")[3];

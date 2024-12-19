@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import API from "../pages/api";
 import Commands from "../pages/commands";
 import Home from "../pages/home";
@@ -11,14 +11,15 @@ import Terms from "../pages/terms";
 import Route from "../types/route";
 import Login from "../pages/auth/login";
 import Logout from "../pages/auth/logout";
-import AccountProfile from "../pages/account/profile";
 import Investor from "../pages/investor";
 import leaderboards from "./leaderboards";
+import AccountPortfolio from "../pages/account/portfolio";
+import AdminPanel from "../pages/admin/panel";
 
 const routes: Route[] = [
   {
     paths: "/",
-    element: <Home />,
+    element: Home,
     navigation: {
       name: "Home",
       right: false,
@@ -26,7 +27,7 @@ const routes: Route[] = [
   },
   {
     paths: "/commands",
-    element: <Commands />,
+    element: Commands,
     navigation: {
       name: "Commands",
       right: false,
@@ -34,7 +35,7 @@ const routes: Route[] = [
   },
   {
     paths: ["/lookup/investors"],
-    element: <Lookup />,
+    element: Lookup,
     navigation: {
       name: "Lookup",
       link: "/lookup/investors",
@@ -43,7 +44,7 @@ const routes: Route[] = [
   },
   {
     paths: ["/market/stocks"],
-    element: <Market />,
+    element: Market,
     navigation: {
       name: "Markets",
       link: "/market/stocks",
@@ -52,7 +53,7 @@ const routes: Route[] = [
   },
   {
     paths: "/lottery",
-    element: <Lottery />,
+    element: Lottery,
     navigation: {
       name: "Lottery",
       right: false,
@@ -62,7 +63,7 @@ const routes: Route[] = [
     paths: Object.entries(leaderboards).flatMap(([type, leaderboards]) =>
       leaderboards.map((value) => `/leaderboard/${type}/${value}`)
     ),
-    element: <Leaderboard />,
+    element: Leaderboard,
     navigation: {
       name: "Leaderboards",
       link: "/leaderboard/investors/cash",
@@ -71,7 +72,7 @@ const routes: Route[] = [
   },
   {
     paths: "/api",
-    element: <API />,
+    element: API,
     navigation: {
       name: "API",
       right: true,
@@ -79,7 +80,7 @@ const routes: Route[] = [
   },
   {
     paths: "/terms",
-    element: <Terms />,
+    element: Terms,
     navigation: {
       name: "Terms Of Service",
       right: true,
@@ -87,7 +88,7 @@ const routes: Route[] = [
   },
   {
     paths: "/privacy",
-    element: <Privacy />,
+    element: Privacy,
     navigation: {
       name: "Privacy Policy",
       right: true,
@@ -95,24 +96,29 @@ const routes: Route[] = [
   },
   {
     paths: "/auth/login",
-    element: <Login />,
+    element: Login,
   },
   {
     paths: "/auth/logout",
-    element: <Logout />,
+    element: Logout,
   },
   {
-    paths: "/account/profile",
-    element: <AccountProfile />,
+    paths: "/account/portfolio",
+    element: AccountPortfolio,
     authorized: true,
   },
   {
     paths: "/investor/:id",
-    element: <Investor />,
+    element: Investor,
+  },
+  {
+    paths: "/admin/panel",
+    element: AdminPanel,
+    admin: true,
   },
   {
     paths: "*",
-    element: <Navigate to={"/"} />,
+    element: () => <Navigate to={"/"} />,
   },
 ];
 

@@ -1,10 +1,10 @@
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import useFetchApi from "../../hooks/useFetchApi";
 import SavedUser from "../../types/savedUser";
 
-const Login = (): JSX.Element => {
+const Login = (): React.ReactNode => {
   const location = useLocation();
   const naviagte = useNavigate();
   const fetchApi = useFetchApi();
