@@ -1,29 +1,29 @@
-@font-face {
-  font-family: "Poppins";
-  font-weight: 400;
-  src: url(/src/assets/poppins/400.woff2) format("woff2");
-}
-
-@font-face {
-  font-family: "Poppins";
-  font-weight: 700;
-  src: url(/src/assets/poppins/700.woff2) format("woff2");
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
-
 * {
   margin: 0;
   padding: 0;
   font-family: "Poppins";
 }
 
-body {
-  background-color: #1d1e28;
-}
-
 html {
   scroll-behavior: smooth;
+  color: white;
+  background-color: rgb(29, 35, 51);
+}
+
+input::placeholder {
+  color: rgb(154, 161, 178);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.lucide-loader-circle {
+  animation: spin 0.5s linear infinite;
 }

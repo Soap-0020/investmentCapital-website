@@ -1,61 +1,31 @@
-import { useEffect, useState } from "react";
-import useFetchApi from "../hooks/useFetchApi";
-import { useLocation } from "react-router";
-import useWebsocketApi from "../hooks/useWebsocketApi";
-import Chart from "../components/chart";
-import MarketType from "../types/markets/market";
+import TimeAgo from "react-timeago";
+import Number from "../components/number";
+import { useStocksCache } from "../hooks/cache/useStocksCache";
 
-const Market = (): React.ReactNode => {
-  const [marketData, setMarketData] = useState<{ [key: string]: MarketType }>(
-    {}
-  );
-  const fetchApi = useFetchApi();
-  const websocketApi = useWebsocketApi();
-  const location = useLocation();
-  const marketType = location.pathname.split("/")[2] as any;
-
-  useEffect(() => {
-    fetchApi(`/market/${marketType}`).then((data) =>
-      setMarketData((value) => {
-        const newData = { ...value };
-        newData[marketType] = data;
-        return newData;
-      })
-    );
-  }, [location]);
-
-  useEffect(() => {
-    const websocket = websocketApi("/markets");
-
-    websocket.addEventListener("message", (event) => {
-      const json = JSON.parse(event.data);
-
-      setMarketData((value) => {
-        const newData = { ...value };
-        newData[json.market] = json.data;
-
-        return newData;
-      });
-    });
-
-    return () => websocket.close();
-  }, []);
+const MarketPage = () => {
+  const stocksCache = useStocksCache();
+  if (!stocksCache) return <div>loading</div>;
 
   return (
-    <div style={{ color: "white" }}>
-      <Chart
-        width={1300}
-        height={600}
-        data={Object.entries(marketData[marketType] ?? []).reduce(
-          (prev, current) => {
-            (prev as any)[current[0]] = current[1].history;
-            return prev;
-          },
-          {}
-        )}
-      />
+    <div style={{ display: "flex", gap: "12px", flexDirection: "column" }}>
+      {Object.entries(stocksCache).map(([id, data]) => (
+        <div key={id}>
+          <p>ID: {id}</p>
+          <p>Name: {data.config?.name}</p>
+          {data.market && (
+            <>
+              <p>
+                Price: <Number value={data.market.price} currency />
+              </p>
+              <p>
+                Last Updated: <TimeAgo date={data.market.date} />
+              </p>
+            </>
+          )}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default Market;
+export default MarketPage;

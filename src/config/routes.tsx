@@ -1,121 +1,69 @@
-import { Navigate } from "react-router";
-import API from "../pages/api";
-import Commands from "../pages/commands";
-import Home from "../pages/home";
-import Leaderboard from "../pages/leaderboard";
-import Lookup from "../pages/lookup";
-import Lottery from "../pages/lottery";
-import Market from "../pages/market";
-import Privacy from "../pages/privacy";
-import Terms from "../pages/terms";
+import {
+  BookOpen,
+  FileText,
+  ShieldCheck,
+  TrendingUp,
+  Trophy,
+} from "lucide-react";
+import IndexPage from "../pages";
+import MarketPage from "../pages/market";
 import Route from "../types/route";
-import Login from "../pages/auth/login";
-import Logout from "../pages/auth/logout";
-import Investor from "../pages/investor";
-import AccountPortfolio from "../pages/account/portfolio";
-import AdminPanel from "../pages/admin/panel";
+import { Navigate } from "react-router-dom";
 
 const routes: Route[] = [
   {
-    paths: "/",
-    element: Home,
+    path: "/",
+    element: IndexPage,
+  },
+  {
+    path: "/market",
+    element: MarketPage,
     navigation: {
-      name: "Home",
-      right: false,
+      label: "Market",
+      category: "Game",
+      icon: TrendingUp,
     },
   },
   {
-    paths: "/commands",
-    element: Commands,
+    path: "/leaderboard/:type",
+    element: () => <div></div>,
     navigation: {
-      name: "Commands",
-      right: false,
+      label: "Leaderboards",
+      category: "Game",
+      link: "/leaderboard/cash",
+      icon: Trophy,
     },
   },
   {
-    paths: ["/lookup/investors"],
-    element: Lookup,
+    path: "/guide",
+    element: () => <div></div>,
     navigation: {
-      name: "Lookup",
-      link: "/lookup/investors",
-      right: false,
+      label: "Guide",
+      category: "Game",
+      icon: BookOpen,
     },
   },
   {
-    paths: ["/market/stocks", "/market/realEstate"],
-    element: Market,
+    path: "/terms",
+    element: () => <div></div>,
     navigation: {
-      name: "Markets",
-      link: "/market/stocks",
-      right: false,
+      label: "Terms",
+      category: "Legal",
+      icon: FileText,
     },
   },
   {
-    paths: "/lottery",
-    element: Lottery,
+    path: "/privacy",
+    element: () => <div></div>,
     navigation: {
-      name: "Lottery",
-      right: false,
+      label: "Privacy",
+      category: "Legal",
+      icon: ShieldCheck,
     },
   },
   {
-    paths: "/leaderboard/:type/:leaderboard",
-    element: Leaderboard,
-    navigation: {
-      name: "Leaderboards",
-      link: "/leaderboard/investors/cash",
-      right: false,
-    },
-  },
-  {
-    paths: "/api",
-    element: API,
-    navigation: {
-      name: "API",
-      right: true,
-    },
-  },
-  {
-    paths: "/terms",
-    element: Terms,
-    navigation: {
-      name: "Terms Of Service",
-      right: true,
-    },
-  },
-  {
-    paths: "/privacy",
-    element: Privacy,
-    navigation: {
-      name: "Privacy Policy",
-      right: true,
-    },
-  },
-  {
-    paths: "/auth/login",
-    element: Login,
-  },
-  {
-    paths: "/auth/logout",
-    element: Logout,
-  },
-  {
-    paths: "/account/portfolio",
-    element: AccountPortfolio,
-    authorized: true,
-  },
-  {
-    paths: "/investor/:id",
-    element: Investor,
-  },
-  {
-    paths: "/admin/panel",
-    element: AdminPanel,
-    admin: true,
-  },
-  {
-    paths: "*",
-    element: () => <Navigate to={"/"} />,
+    path: "*",
+    element: () => <Navigate to="/" />,
   },
 ];
 
